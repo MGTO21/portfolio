@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light" data-lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO -->
+    <title data-lang-key="pageTitle">محمد معتصم | مطور فول ستاك</title>
+    <meta name="description" data-lang-key="metaDescription" content="محمد معتصم - مطور ويب فول ستاك محترف مع خبرة 5 سنوات في بناء تطبيقات حديثة">
+    <meta name="keywords" content="تطوير ويب, فول ستاك, React, Next.js, Node.js, تصميم مواقع">
+    <meta name="author" content="Mohamed Motasem">
+    <meta property="og:title" data-lang-key="ogTitle" content="محمد معتصم | مطور فول ستاك محترف">
+    <meta property="og:description" data-lang-key="ogDescription" content="حلول ويب مبتكرة بأحدث التقنيات">
+    <link rel="canonical" href="https://www.example.com">
+
+    <!-- Libraries -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Light Theme */
+            --primary-light: #2b6cb0;
+            --secondary-light: #4299e1;
+            --background-light: #f7fafc;
+            --text-light: #2d3748;
+            --card-light: #ffffff;
+            --gradient-light: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+
+            /* Dark Theme */
+            --primary-dark: #63b3ed;
+            --secondary-dark: #90cdf4;
+            --background-dark: #1a202c;
+            --text-dark: #e2e8f0;
+            --card-dark: #2d3748;
+            --gradient-dark: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+        [data-theme="light"] {
+            --primary: var(--primary-light);
+            --secondary: var(--secondary-light);
+            --background: var(--background-light);
+            --text: var(--text-light);
+            --card: var(--card-light);
+            --gradient: var(--gradient-light);
+        }
+
+        [data-theme="dark"] {
+            --primary: var(--primary-dark);
+            --secondary: var(--secondary-dark);
+            --background: var(--background-dark);
+            --text: var(--text-dark);
+            --card: var(--card-dark);
+            --gradient: var(--gradient-dark);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Tajawal', 'Poppins', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-padding {
+            padding: 8rem 0;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border: 2px solid var(--background);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+        }
+
+        .lang-toggle {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            border: 2px solid var(--background);
+            font-weight: 600;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .lang-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        nav {
+            position: fixed;
+            width: 100%;
+            padding: 1.5rem 0;
+            background: rgba(var(--card), 0.8);
+            backdrop-filter: blur(16px);
+            z-index: 999;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: var(--gradient);
+            position: relative;
+            overflow: hidden;
+            padding: 8rem 0;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, rgba(0,0,0,0.1), transparent);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            line-height: 1.2;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: var(--card);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(var(--text), 0.1);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .skill-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .portfolio-item {
+            background: var(--card);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card);
+            padding: 3rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid rgba(var(--text), 0.1);
+            border-radius: 0.75rem;
+            background: var(--background);
+            color: var(--text);
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            transition: transform 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            background: var(--card);
+            padding: 4rem 0 2rem;
+            border-top: 1px solid rgba(var(--text), 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(var(--text), 0.1);
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                flex-direction: column;
+                background: var(--card);
+                width: 100%;
+                max-width: 300px;
+                padding: 1rem;
+                transition: right 0.3s ease;
+                box-shadow: -4px 0 15px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                padding: 1rem;
+                border-bottom: 1px solid rgba(var(--text), 0.1);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.75rem;
+            }
+
+            .hero p {
+                font-size: 1.25rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-padding {
+                padding: 6rem 0;
+            }
+
+            .lang-toggle {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <button class="lang-toggle" onclick="toggleLanguage()">
+        <i class="fas fa-globe"></i>
+        <span data-lang="ar">English</span>
+        <span data-lang="en" hidden>العربية</span>
+    </button>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-container">
+            <a href="#" class="nav-logo" data-lang-key="logo">M.M</a>
+            <button class="mobile-menu-btn" onclick="handleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-links">
+                <a href="#home" data-lang-key="home">الرئيسية</a>
+                <a href="#about" data-lang-key="about">من نحن</a>
+                <a href="#skills" data-lang-key="skills">المهارات</a>
+                <a href="#portfolio" data-lang-key="portfolio">الأعمال</a>
+                <a href="#contact" data-lang-key="contact">تواصل</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content" data-aos="fade-up">
+                <h1 data-lang-key="heroTitle">محمد معتصم</h1>
+                <p data-lang-key="heroSub">مطور حلول ويب متكاملة</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section-padding" id="about">
+        <div class="container">
+            <h2 class="section-title" data-lang-key="aboutTitle">من نحن</h2>
+            <div class="about-grid" data-aos="fade-up">
+                
+                <div class="about-content">
+                    <p data-lang-key="aboutText">نحن فريق من المطورين المحترفين نقدم حلول ويب مبتكرة باستخدام أحدث التقنيات. خبرة أكثر من 5 سنوات في تطوير تطبيقات الويب الحديثة.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="section-padding" id="skills">
+        <div class="container">
+            <h2 class="section-title" data-lang-key="skillsTitle">المهارات</h2>
+            <div class="skills-grid">
+                <div class="skill-card" data-aos="zoom-in">
+                    <i class="fas fa-code skill-icon"></i>
+                    <h3 data-lang-key="skill1">تطوير الواجهات</h3>
+                    <p data-lang-key="skill1Desc">React, Next js,Node js, HTML5, CSS3</p>
+                </div>
+                <div class="skill-card" data-aos="zoom-in">
+                    <i class="fas fa-database skill-icon"></i>
+                    <h3 data-lang-key="skill2">قواعد البيانات</h3>
+                    <p data-lang-key="skill2Desc">MySQL, MongoDB</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="section-padding" id="portfolio">
+        <div class="container">
+            <h2 class="section-title" data-lang-key="portfolioTitle">أعمالنا</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item" data-aos="fade-up">
+                    <img src="/images/Screenshot (1).png" alt="Project 1" class="portfolio-image">
+                    <div class="portfolio-info">
+                        <h3 data-lang-key="project1">كافيه </h3>
+                        <p data-lang-key="project1Desc">Next.js, Node.js, MongoDB</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-aos="fade-up">
+                    <img src="/images/Screenshot (7).png" alt="Project 2" class="portfolio-image">
+                    <div class="portfolio-info">
+                        <h3 data-lang-key="project1">متجر هدايه</h3>
+                        <p data-lang-key="project1Desc">html5, css, js</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section-padding" id="contact">
+        <div class="container">
+            <h2 class="section-title" data-lang-key="contactTitle">تواصل معنا</h2>
+            <form class="contact-form" data-aos="fade-up">
+                <input type="text" class="form-input" data-lang-key="namePlaceholder" placeholder="اسمك الكريم">
+                <input type="email" class="form-input" data-lang-key="emailPlaceholder" placeholder="البريد الإلكتروني">
+                <textarea class="form-input" rows="5" data-lang-key="messagePlaceholder" placeholder="رسالتك..."></textarea>
+                <button type="submit" class="btn-primary" data-lang-key="submitButton">إرسال الرسالة</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer section-padding">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section" data-aos="fade-up">
+                    <h3 data-lang-key="footerAbout">عن الموقع</h3>
+                    <p data-lang-key="footerAboutText">منصة تطوير ويب متكاملة تقدم حلولاً تقنية مبتكرة لمشاريعك الرقمية.</p>
+                </div>
+                
+                <div class="footer-section" data-aos="fade-up" data-aos-delay="100">
+                    <h3 data-lang-key="footerLinks">روابط سريعة</h3>
+                    <div class="footer-links">
+                        <a href="#home" data-lang-key="home">الرئيسية</a>
+                        <a href="#about" data-lang-key="about">من نحن</a>
+                        <a href="#portfolio" data-lang-key="portfolio">الأعمال</a>
+                        <a href="#contact" data-lang-key="contact">تواصل</a>
+                    </div>
+                </div>
+
+                <div class="footer-section" data-aos="fade-up" data-aos-delay="200">
+                    <h3 data-lang-key="footerConnect">تواصل معنا</h3>
+                    <div class="social-links">
+                        <a href="https://github.com/MGTO21"><i class="fab fa-github"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=61573564607311"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=61573564607311"><i class="fab fa-facebook"></i></a>
+                        <a href="to00bi.com@gmail.com"><i class="far fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom" data-aos="fade-up">
+                <p data-lang-key="footerCopy">&copy; 2025 محمد معتصم. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        // Theme Management
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            html.setAttribute('data-theme', newTheme);
+            const themeIcon = document.querySelector('.theme-toggle i');
+            themeIcon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Language Management
+        const translations = {
+            ar: {
+                pageTitle: "محمد معتصم | مطور فول ستاك",
+                metaDescription: "مطور ويب محترف بخبرة 5 سنوات",
+                ogTitle: "محمد معتصم | مطور فول ستاك",
+                ogDescription: "حلول ويب مبتكرة بتقنيات حديثة",
+                logo: "م.م",
+                home: "الرئيسية",
+                about: "من نحن",
+                skills: "المهارات",
+                portfolio: "الأعمال",
+                contact: "تواصل",
+                heroTitle: "محمد معتصم",
+                heroSub: "مطور حلول ويب متكاملة",
+                aboutTitle: "من نحن",
+                aboutText: "نحن فريق من المطورين المحترفين نقدم حلول ويب مبتكرة باستخدام أحدث التقنيات. خبرة أكثر من 5 سنوات في تطوير تطبيقات الويب الحديثة.",
+                skillsTitle: "المهارات التقنية",
+                skill1: "تطوير الواجهات",
+                skill1Desc: "React, Next js, HTML5, CSS3",
+                skill2: "قواعد البيانات",
+                skill2Desc: "MySQL, MongoDB, ",
+                portfolioTitle: "أعمالنا",
+                project1: "كافيه",
+                project2: "متجر هدايه ",
+                project1Desc: "Next.js, Node.js, MongoDB",
+                contactTitle: "تواصل معنا",
+                namePlaceholder: "اسمك الكريم",
+                emailPlaceholder: "البريد الإلكتروني",
+                messagePlaceholder: "رسالتك...",
+                submitButton: "إرسال الرسالة",
+                footerAbout: "عن الموقع",
+                footerAboutText: "منصة تطوير ويب متكاملة تقدم حلولاً تقنية مبتكرة لمشاريعك الرقمية.",
+                footerLinks: "روابط سريعة",
+                footerConnect: "تواصل معنا",
+                footerCopy: "© 2025 محمد معتصم. جميع الحقوق محفوظة."
+            },
+            en: {
+                pageTitle: "Mohamed Motasem | Full Stack Developer",
+                metaDescription: "Professional web developer with 5 years experience",
+                ogTitle: "Mohamed Motasem | Full Stack Developer",
+                ogDescription: "Innovative web solutions with modern technologies",
+                logo: "M.M",
+                home: "Home",
+                about: "About",
+                skills: "Skills",
+                portfolio: "Portfolio",
+                contact: "Contact",
+                heroTitle: "Mohamed Motasem",
+                heroSub: "Full Stack Web Solutions",
+                aboutTitle: "About Us",
+                aboutText: "We are a team of professional developers delivering innovative web solutions using modern technologies. Over 5 years of experience in modern web application development.",
+                skillsTitle: "Technical Skills",
+                skill1: "Frontend Development",
+                skill1Desc: "React, Next js, HTML5, CSS3",
+                skill2: "Databases",
+                skill2Desc: "MySQL, MongoDB, ",
+                portfolioTitle: "Our Work",
+                project1: "Cafe",
+                project2: "Gift store",
+                project1Desc: "Next.js, Node.js, MongoDB",
+                contactTitle: "Contact Us",
+                namePlaceholder: "Your Name",
+                emailPlaceholder: "Email Address",
+                messagePlaceholder: "Your Message...",
+                submitButton: "Send Message",
+                footerAbout: "About",
+                footerAboutText: "A full-stack development platform delivering innovative tech solutions for your digital projects.",
+                footerLinks: "Quick Links",
+                footerConnect: "Connect With Us",
+                footerCopy: "© 2024 Mohamed Motasem. All rights reserved."
+            }
+        };
+
+        function toggleLanguage() {
+            const html = document.documentElement;
+            const currentLang = html.getAttribute('data-lang');
+            const newLang = currentLang === 'ar' ? 'en' : 'ar';
+            
+            html.setAttribute('data-lang', newLang);
+            html.setAttribute('dir', newLang === 'ar' ? 'rtl' : 'ltr');
+            html.setAttribute('lang', newLang);
+            
+            document.querySelectorAll('.lang-toggle span').forEach(span => {
+                span.hidden = span.getAttribute('data-lang') === newLang;
+            });
+
+            updateContent(newLang);
+            localStorage.setItem('lang', newLang);
+        }
+
+        function updateContent(lang) {
+            document.title = translations[lang].pageTitle;
+            document.querySelector('meta[name="description"]').content = translations[lang].metaDescription;
+            document.querySelector('meta[property="og:title"]').content = translations[lang].ogTitle;
+            document.querySelector('meta[property="og:description"]').content = translations[lang].ogDescription;
+            
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.getAttribute('data-lang-key');
+                if (translations[lang][key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = translations[lang][key];
+                    } else {
+                        el.textContent = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        function handleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({
+                duration: 1000,
+                once: true,
+                easing: 'ease-out-quad'
+            });
+
+            // Load saved settings
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const savedLang = localStorage.getItem('lang') || 'ar';
+            
+            // Apply theme
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.querySelector('.theme-toggle i').className = 
+                savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            
+            // Apply language
+            document.documentElement.setAttribute('data-lang', savedLang);
+            document.documentElement.setAttribute('dir', savedLang === 'ar' ? 'rtl' : 'ltr');
+            document.querySelectorAll('.lang-toggle span').forEach(span => {
+                span.hidden = span.getAttribute('data-lang') === savedLang;
+            });
+            updateContent(savedLang);
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.nav-links') && !e.target.closest('.mobile-menu-btn')) {
+                    document.querySelector('.nav-links').classList.remove('active');
+                }
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                document.querySelector('.nav-links').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
