@@ -276,6 +276,7 @@
             display: inline-block;
         }
 
+        /* تحسين تصميم معرض الأعمال */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -284,23 +285,79 @@
 
         .portfolio-item {
             background: var(--card);
-            border-radius: 1.5rem;
+            border-radius: 2rem;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
             position: relative;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
         }
 
         .portfolio-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            transform: translateY(-20px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
         }
 
         .portfolio-image {
             width: 100%;
-            height: 240px;
+            height: 300px;
             object-fit: cover;
-            border-bottom: 3px solid var(--primary);
+            transition: transform 0.5s ease, filter 0.5s ease;
+            filter: grayscale(50%);
+        }
+
+        .portfolio-item:hover .portfolio-image {
+            transform: scale(1.1);
+            filter: grayscale(0%);
+        }
+
+        .portfolio-info {
+            padding: 2rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            color: white;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-item:hover .portfolio-info {
+            transform: translateY(0);
+        }
+
+        .portfolio-info h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .portfolio-info p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+
+        .portfolio-buttons {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .portfolio-buttons a {
+            padding: 0.5rem 1.5rem;
+            border-radius: 5rem;
+            text-decoration: none;
+            color: white;
+            background: var(--primary);
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .portfolio-buttons a:hover {
+            background: var(--secondary);
+            transform: scale(1.1);
         }
 
         .contact-form {
@@ -409,6 +466,34 @@
             transform: translateY(-3px);
         }
 
+        /* تحسين تصميم الأيقونات */
+        .social-icons a {
+            color: white;
+            font-size: 2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2);
+            background: var(--primary);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-icons a i {
+            transition: transform 0.3s ease;
+        }
+
+        .social-icons a:hover i {
+            transform: rotate(15deg);
+        }
+
         @media (max-width: 1024px) {
             .container {
                 padding: 0 1.5rem;
@@ -515,6 +600,21 @@
             <div class="hero-content" data-aos="fade-up">
                 <h1 data-lang-key="heroTitle">محمد معتصم</h1>
                 <p data-lang-key="heroSub">مطور حلول ويب متكاملة</p>
+                <!-- أيقونات التواصل الاجتماعي -->
+                <div class="social-icons" style="margin-top: 2rem; display: flex; justify-content: center; gap: 1.5rem;">
+                    <a href="https://wa.me/249129449205" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="https://github.com/MGTO21" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=61573564607311" target="_blank">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/mohamed-mutasim-76065b311?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -559,18 +659,19 @@
                 <div class="portfolio-item" data-aos="fade-up">
                     <img src="/images/Screenshot (1).png" alt="Project 1" class="portfolio-image">
                     <div class="portfolio-info">
-                        <h3 data-lang-key="project1">كافيه </h3>
+                        <h3 data-lang-key="project1">كافيه</h3>
                         <p data-lang-key="project1Desc">Next.js, Node.js, MongoDB</p>
+                        <a href="https://mgto21.github.io/cafe" target="_blank" class="btn-primary" data-lang-key="visitSite" style="padding: 0.8rem 2rem; text-decoration: none;">زيارة الموقع</a>
                     </div>
                 </div>
                 <div class="portfolio-item" data-aos="fade-up">
                     <img src="/images/Screenshot (7).png" alt="Project 2" class="portfolio-image">
                     <div class="portfolio-info">
-                        <h3 data-lang-key="project1">متجر هدايه</h3>
-                        <p data-lang-key="project1Desc">html5, css, js</p>
+                        <h3 data-lang-key="project2">متجر هدايا</h3>
+                        <p data-lang-key="project2Desc">HTML5, CSS, JS</p>
+                        <a href="https://mgto21.github.io/rosegifts/" target="_blank" class="btn-primary" data-lang-key="visitSite" style="padding: 0.8rem 2rem; text-decoration: none;">زيارة الموقع</a>
                     </div>
                 </div>
-                
             </div>
         </div>
     </section>
@@ -611,7 +712,7 @@
                     <h3 data-lang-key="footerConnect">تواصل معنا</h3>
                     <div class="social-links">
                         <a href="https://github.com/MGTO21"><i class="fab fa-github"></i></a>
-                        <a href="https://www.facebook.com/profile.php?id=61573564607311"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.linkedin.com/in/mohamed-mutasim-76065b311?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin"></i></a>
                         <a href="https://www.facebook.com/profile.php?id=61573564607311"><i class="fab fa-facebook"></i></a>
                         <a href="to00bi.com@gmail.com"><i class="far fa-envelope"></i></a>
                     </div>
@@ -662,8 +763,8 @@
                 skill2Desc: "MySQL, MongoDB, ",
                 portfolioTitle: "أعمالنا",
                 project1: "كافيه",
-                project2: "متجر هدايه ",
-                project1Desc: "Next.js, Node.js, MongoDB",
+                project2: "متجر هدايا ",
+                project1Desc: "            Next.js, Node.js, MongoDB",
                 contactTitle: "تواصل معنا",
                 namePlaceholder: "اسمك الكريم",
                 emailPlaceholder: "البريد الإلكتروني",
@@ -746,6 +847,37 @@
                 }
             });
         }
+
+        // إرسال البريد الإلكتروني
+        document.querySelector('.contact-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const nameInput = document.querySelector('.contact-form input[placeholder="اسمك الكريم"]');
+            const emailInput = document.querySelector('.contact-form input[placeholder="البريد الإلكتروني"]');
+            const messageInput = document.querySelector('.contact-form textarea[placeholder="رسالتك..."]');
+
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            const message = messageInput.value.trim();
+
+            if (!name || !email || !message) {
+                alert('يرجى ملء جميع الحقول.');
+                return;
+            }
+
+            const mailtoLink = `mailto:to00bi.com@gmail.com?subject=رسالة من ${name}&body=البريد الإلكتروني: ${email}%0A%0Aالرسالة:%0A${message}`;
+
+            try {
+                window.location.href = mailtoLink;
+                // تفريغ الحقول بعد الإرسال
+                nameInput.value = '';
+                emailInput.value = '';
+                messageInput.value = '';
+                alert('تم إرسال الرسالة بنجاح!');
+            } catch (error) {
+                alert('حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة مرة أخرى.');
+            }
+        });
 
         function handleMobileMenu() {
             const navLinks = document.querySelector('.nav-links');
